@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* ===== Invita DNA Lab — brand system ===== */
+
+.invita {
+  /* Official Invita palette (brand kit): navy #0F2341, periwinkle #A0B1DD,
+     gold #D9B344, ivory #F0EDE4. Other tokens are tints/shades of those. */
+  --iv-night: #0a1a33;
+  --iv-navy: #0f2341;
+  --iv-royal: #1b3a8c; /* royal blue used across Invita's Instagram posts */
+  --iv-gold: #d9b344;
+  --iv-gold-soft: #ead48c;
+  --iv-gold-ink: #7d6010; /* gold for text on light surfaces (AA) */
+  --iv-cream: #f0ede4;
+  --iv-paper: #f7f5ef;
+  --iv-sand: #e8e1d0;
+  --iv-line: #ddd6c6;
+  --iv-sky: #d4dcef;
+  --iv-sky-deep: #a0b1dd;
+  --iv-muted: #525c75;
+  --iv-radius: 28px;
+  --iv-glow: 0 18px 50px -24px rgba(217, 179, 68, 0.55);
+
+  font-family: var(--font-alexandria), system-ui, sans-serif;
+  background: var(--iv-paper);
+  color: var(--iv-navy);
+}
+
+.invita ::selection {
+  background: var(--iv-gold-soft);
+  color: var(--iv-navy);
+}
+
+/* Fine film grain over dark sections (pure CSS, no image asset). */
+.iv-grain {
+  position: relative;
+  isolation: isolate;
+}
+.iv-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.9) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+
+.iv-marquee {
+  animation: iv-marquee 40s linear infinite;
+}
+
+@keyframes iv-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+[dir="rtl"] .iv-marquee {
+  animation-name: iv-marquee-rtl;
+}
+
+@keyframes iv-marquee-rtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
+.iv-float {
+  animation: iv-float 8s ease-in-out infinite;
+}
+
+@keyframes iv-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.iv-pulse {
+  animation: iv-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes iv-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iv-marquee,
+  .iv-float,
+  .iv-pulse {
+    animation: none;
+  }
+}
