@@ -699,6 +699,9 @@ export default async function InvitaDnaPage({ params }: PageProps) {
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {DNA_REPORTS.map((r, i) => {
               const cover = DNA_REPORT_COVER[r.slug];
+              // A photo sits under a dark scrim, so its card takes light text
+              // whatever the report's own tone is.
+              const tone = cover ? "night" : r.tone;
               return (
               <li
                 key={r.slug}
@@ -706,7 +709,7 @@ export default async function InvitaDnaPage({ params }: PageProps) {
               >
                 <Link
                   href={`/${r.slug}`}
-                  className={`group relative isolate flex h-full min-h-[15rem] flex-col justify-between overflow-hidden rounded-[var(--iv-radius)] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_60px_-30px_var(--iv-night)] ${DNA_TONE_CLASS[r.tone]}`}
+                  className={`group relative isolate flex h-full min-h-[15rem] flex-col justify-between overflow-hidden rounded-[var(--iv-radius)] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_60px_-30px_var(--iv-night)] ${DNA_TONE_CLASS[tone]}`}
                 >
                   {cover ? (
                     <>
@@ -736,7 +739,7 @@ export default async function InvitaDnaPage({ params }: PageProps) {
                       value={r.sample[0].level}
                       label={copy.example}
                       size={i === 0 ? 128 : 92}
-                      accent={DNA_TONE_ACCENT[r.tone]}
+                      accent={DNA_TONE_ACCENT[tone]}
                       track="color-mix(in srgb, currentColor 18%, transparent)"
                     />
                   </div>

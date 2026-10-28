@@ -2,9 +2,9 @@ import type { Localized } from "@/lib/i18n";
 import type { DnaReportSlug } from "@/lib/reports";
 
 /**
- * Invita DNA Lab imagery — official Invita logo files, Invita's own report
- * covers and posts from Invita's Instagram. Only images without people are
- * used. Files live in `public/images/invita-dna/`.
+ * Invita DNA Lab imagery: official Invita logo files, Invita's own report
+ * covers (`public/images/covers/`) and posts from Invita's Instagram. Files
+ * live in `public/images/`.
  */
 const DIR = "/images";
 
@@ -69,12 +69,45 @@ export const DNA_IMAGES = {
     alt: { en: "Invita IV vitamin vials on a marble stand", ar: "قوارير فيتامينات Invita الوريدية على قاعدة رخامية" },
     position: "50% 45%",
   },
+  coverHealth: {
+    src: `${DIR}/covers/health.webp`,
+    width: 735,
+    height: 1103,
+    alt: {
+      en: "A laughing grandfather lifting his granddaughter in a sunlit room",
+      ar: "جدّ يضحك وهو يرفع حفيدته في غرفة مشمسة",
+    },
+    position: "50% 55%",
+  },
+  coverSkin: {
+    src: `${DIR}/covers/skin.webp`,
+    width: 736,
+    height: 1308,
+    alt: {
+      en: "Close-up of a smiling woman with freckled skin, eyes closed, a hand resting on her cheek",
+      ar: "صورة قريبة لامرأة مبتسمة ببشرة منمّشة، عيناها مغمضتان ويدها على خدّها",
+    },
+    position: "50% 40%",
+  },
+  coverPersonality: {
+    src: `${DIR}/covers/personality.webp`,
+    width: 735,
+    height: 1101,
+    alt: {
+      en: "A woman with her eyes closed and face turned to warm sunlight, hair lifting in the breeze",
+      ar: "امرأة مغمضة العينين تستقبل بوجهها ضوء الشمس الدافئ وشعرها يتطاير مع النسيم",
+    },
+    position: "55% 60%",
+  },
 } satisfies Record<string, DnaImage>;
 
 /** Photographic covers for report cards and detail heroes (others use vector art). */
 export const DNA_REPORT_COVER: Partial<Record<DnaReportSlug, DnaImage>> = {
   ancestry: DNA_IMAGES.ancestry,
+  health: DNA_IMAGES.coverHealth,
   pharma: DNA_IMAGES.capsulesPharma,
+  skin: DNA_IMAGES.coverSkin,
+  personality: DNA_IMAGES.coverPersonality,
   "all-in-one": DNA_IMAGES.helix,
 };
 
