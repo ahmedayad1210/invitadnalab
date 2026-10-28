@@ -1,4 +1,4 @@
-# Invita DNA Lab — invitadnalab.com
+# Invita DNA Lab — invitadna.com
 
 The bilingual (Arabic / English) public website for Invita DNA Lab: the three
 test depths (Invita Single, Seven and Genome), the seven reports, how the home
@@ -56,18 +56,14 @@ existing project → GitHub → `invitadnalab`). The build command, publish
 directory and headers come from `netlify.toml`; nothing needs setting by hand.
 Merging to `main` then deploys it.
 
-The site's domain is **invitadnalab.com**. Canonical links, hreflang, the
-sitemap, robots.txt and share images all use it (`lib/seo.ts`), including on
-deploy previews. Set `NEXT_PUBLIC_SITE_URL` only if the domain changes.
+The site's domain is **invitadna.com** (primary on the Netlify site). Canonical
+links, hreflang, the sitemap, robots.txt and share images all use it
+(`lib/seo.ts`), including on deploy previews. Set `NEXT_PUBLIC_SITE_URL` only
+if the domain changes.
 
-To attach the domain: Netlify → this site → Domain management → Add a domain
-→ `invitadnalab.com`, and make it the primary domain (Netlify adds
-`www.invitadnalab.com` as a redirect to it). Then at the DNS provider point
-the apex at Netlify's load balancer and `www` at the site's `*.netlify.app`
-name, exactly as Netlify's domain panel shows. If the domain also carries
-email (the report builder's intake account is `intake-form@invitadnalab.com`),
-leave its MX and other mail records as they are; only the web records change.
-Netlify issues the HTTPS certificate once DNS resolves.
+The other Invita DNA addresses live elsewhere and must keep their own Netlify
+sites: the sampling team's intake form is at reg.invitadna.com and the report
+builder at form.invitadna.com (both in the `invitadna` repository).
 
 Use a new Netlify site for this. The existing `invita-dna-lab` project serves
 a separate app (a WhatsApp Flows booking endpoint), and deploying this site

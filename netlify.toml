@@ -1,4 +1,4 @@
-# invitadnalab.com — the public Invita DNA Lab website.
+# invitadna.com — the public Invita DNA Lab website.
 #
 # Nothing here handles patient data. The booking form only opens WhatsApp with
 # the visitor's details pre-filled; no submission reaches a server, Airtable or

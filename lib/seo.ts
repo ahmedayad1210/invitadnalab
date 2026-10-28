@@ -3,11 +3,11 @@ import type { Locale } from "@/lib/i18n";
 
 /**
  * Absolute origin for canonical URLs, hreflang, share images and the sitemap.
- * The site's home is invitadnalab.com; deploy previews and local builds
+ * The site's home is invitadna.com; deploy previews and local builds
  * advertise it too, so a preview is never indexed as the canonical copy.
  * NEXT_PUBLIC_SITE_URL overrides it if the domain ever changes.
  */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://invitadnalab.com").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://invitadna.com").replace(/\/$/, "");
 
 type PageMetaInput = {
   locale: Locale;
