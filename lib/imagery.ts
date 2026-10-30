@@ -46,13 +46,6 @@ export const DNA_IMAGES = {
     },
     position: "55% 40%",
   },
-  capsulesPharma: {
-    src: `${DIR}/capsules-pharma.webp`,
-    width: 900,
-    height: 980,
-    alt: { en: "Medicine capsules linked by fine lines", ar: "كبسولات دواء تربطها خطوط دقيقة" },
-    position: "50% 35%",
-  },
   invitaCapsules: {
     src: `${DIR}/invita-capsules.webp`,
     width: 1400,
@@ -99,13 +92,53 @@ export const DNA_IMAGES = {
     },
     position: "55% 60%",
   },
+  coverPharma: {
+    src: `${DIR}/covers/pharma.webp`,
+    width: 564,
+    height: 845,
+    alt: {
+      en: "Colourful tablets and capsules laid out on a yellow background",
+      ar: "أقراص وكبسولات ملوّنة مرتّبة على خلفية صفراء",
+    },
+    position: "50% 45%",
+  },
+  skinClock: {
+    src: `${DIR}/skin/clock.webp`,
+    width: 480,
+    height: 800,
+    alt: {
+      en: "A young face and an older face cheek to cheek, showing how skin changes with age",
+      ar: "وجه شاب ووجه مسنّ متلاصقان، يُظهران كيف تتغيّر البشرة مع العمر",
+    },
+    position: "50% 40%",
+  },
+  skinMoss: {
+    src: `${DIR}/skin/moss.webp`,
+    width: 564,
+    height: 1002,
+    alt: {
+      en: "A woman resting her face on soft green moss in the sun",
+      ar: "امرأة تُسند وجهها إلى طحلب أخضر ناعم تحت الشمس",
+    },
+    position: "60% 35%",
+  },
 } satisfies Record<string, DnaImage>;
+
+export type DnaVideo = { src: string; poster: string; width: number; height: number };
+
+/** Short silent loops: H.264 MP4 with a WebP poster, in `public/media/`. */
+export const DNA_VIDEOS = {
+  /** Three generations of women laughing together, with tulips. */
+  generations: { src: "/media/generations.mp4", poster: "/media/generations.webp", width: 540, height: 960 },
+  /** An older woman's profile, smiling, in warm low light. */
+  skinLight: { src: "/media/skin-light.mp4", poster: "/media/skin-light.webp", width: 540, height: 900 },
+} satisfies Record<string, DnaVideo>;
 
 /** Photographic covers for report cards and detail heroes (others use vector art). */
 export const DNA_REPORT_COVER: Partial<Record<DnaReportSlug, DnaImage>> = {
   ancestry: DNA_IMAGES.ancestry,
   health: DNA_IMAGES.coverHealth,
-  pharma: DNA_IMAGES.capsulesPharma,
+  pharma: DNA_IMAGES.coverPharma,
   skin: DNA_IMAGES.coverSkin,
   personality: DNA_IMAGES.coverPersonality,
   "all-in-one": DNA_IMAGES.helix,
