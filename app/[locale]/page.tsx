@@ -16,7 +16,8 @@ import {
   invitaWhatsappUrl,
   type DnaPlan,
 } from "@/lib/reports";
-import { DNA_IMAGES, DNA_REPORT_COVER, INVITA_INSTAGRAM_POSTS, INVITA_LOGO } from "@/lib/imagery";
+import { DNA_IMAGES, DNA_REPORT_COVER, DNA_VIDEOS, INVITA_INSTAGRAM_POSTS, INVITA_LOGO } from "@/lib/imagery";
+import { LoopVideo } from "@/components/loop-video";
 import {
   CoverageStrip,
   DNA_TONE_ACCENT,
@@ -132,6 +133,12 @@ const COPY = {
     reportsTitle: "Seven reports. One sample.",
     reportsSub: "Pick one, or unlock them all — every report runs on the sample you already gave.",
     learnMore: "Explore",
+    genEyebrow: "Generations",
+    genTitle: "What you inherit. What you pass on.",
+    genBody:
+      "Your grandmother's skin, your mother's metabolism, a carrier gene nobody in the family knew about: a family's story is written in DNA. One swab reads yours, so you can plan for yourself and for the people who come after you.",
+    genHealth: "Health & carrier genes",
+    genAncestry: "Where your family comes from",
     pillars: [
       {
         key: "privacy",
@@ -318,6 +325,12 @@ const COPY = {
     reportsTitle: "سبعة تقارير. عيّنة واحدة.",
     reportsSub: "اختر تقريرًا أو افتحها جميعًا — كل تقرير يُجرى على العيّنة التي قدّمتها.",
     learnMore: "استكشف",
+    genEyebrow: "عبر الأجيال",
+    genTitle: "ما ترثه، وما تورّثه.",
+    genBody:
+      "بشرة جدّتك، واستقلاب والدتك، وجينٌ حاملٌ لم يعرف به أحد في العائلة: قصة العائلة مكتوبة في الحمض النووي. مسحة واحدة تقرأ قصتك، لتخطّط لنفسك ولمن يأتي بعدك.",
+    genHealth: "الصحة والجينات الحاملة",
+    genAncestry: "من أين جاءت عائلتك",
     pillars: [
       {
         key: "privacy",
@@ -699,6 +712,9 @@ export default async function InvitaDnaPage({ params }: PageProps) {
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {DNA_REPORTS.map((r, i) => {
               const cover = DNA_REPORT_COVER[r.slug];
+              // A photo sits under a dark scrim, so its card takes light text
+              // whatever the report's own tone is.
+              const tone = cover ? "night" : r.tone;
               return (
               <li
                 key={r.slug}
@@ -706,7 +722,7 @@ export default async function InvitaDnaPage({ params }: PageProps) {
               >
                 <Link
                   href={`/${r.slug}`}
-                  className={`group relative isolate flex h-full min-h-[15rem] flex-col justify-between overflow-hidden rounded-[var(--iv-radius)] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_60px_-30px_var(--iv-night)] ${DNA_TONE_CLASS[r.tone]}`}
+                  className={`group relative isolate flex h-full min-h-[15rem] flex-col justify-between overflow-hidden rounded-[var(--iv-radius)] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_60px_-30px_var(--iv-night)] ${DNA_TONE_CLASS[tone]}`}
                 >
                   {cover ? (
                     <>
@@ -723,7 +739,7 @@ export default async function InvitaDnaPage({ params }: PageProps) {
                         style={{ objectPosition: cover.position }}
                       />
                       <div
-                        className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,var(--iv-night)_12%,color-mix(in_srgb,var(--iv-night)_45%,transparent)_58%,color-mix(in_srgb,var(--iv-night)_10%,transparent))]"
+                        className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,var(--iv-night)_12%,color-mix(in_srgb,var(--iv-night)_55%,transparent)_58%,color-mix(in_srgb,var(--iv-night)_30%,transparent))]"
                         aria-hidden
                       />
                     </>
@@ -736,7 +752,7 @@ export default async function InvitaDnaPage({ params }: PageProps) {
                       value={r.sample[0].level}
                       label={copy.example}
                       size={i === 0 ? 128 : 92}
-                      accent={DNA_TONE_ACCENT[r.tone]}
+                      accent={DNA_TONE_ACCENT[tone]}
                       track="color-mix(in srgb, currentColor 18%, transparent)"
                     />
                   </div>
@@ -777,6 +793,35 @@ export default async function InvitaDnaPage({ params }: PageProps) {
               );
             })}
           </ul>
+        </div>
+      </section>
+
+      {/* Generations ---------------------------------------------------- */}
+      <section className="py-20 sm:py-28">
+        <div className={`${wrap} grid items-center gap-12 lg:grid-cols-[1fr_0.85fr]`}>
+          <div>
+            <p className={eyebrowCls}>{copy.genEyebrow}</p>
+            <h2 className={`mt-4 ${h2Cls}`}>{copy.genTitle}</h2>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-[var(--iv-muted)] sm:text-lg">{copy.genBody}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {(["health", "ancestry"] as const).map((slug) => (
+                <Link
+                  key={slug}
+                  href={`/${slug}`}
+                  className="group inline-flex h-12 items-center gap-2.5 rounded-full bg-white ps-3 pe-6 text-sm font-semibold text-[var(--iv-navy)] ring-1 ring-[var(--iv-line)] transition hover:bg-[var(--iv-cream)]"
+                >
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-[var(--iv-navy)] text-[var(--iv-gold)]">
+                    <DnaReportIcon slug={slug} className="h-4 w-4" />
+                  </span>
+                  {slug === "health" ? copy.genHealth : copy.genAncestry}
+                  <span aria-hidden className="transition group-hover:translate-x-1 rtl:group-hover:-translate-x-1">{arrow}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[calc(var(--iv-radius)+8px)] bg-[var(--iv-cream)] ring-1 ring-[var(--iv-line)]">
+            <LoopVideo video={DNA_VIDEOS.generations} className="h-full w-full object-cover" position="50% 35%" />
+          </div>
         </div>
       </section>
 
