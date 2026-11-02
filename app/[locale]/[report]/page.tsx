@@ -19,6 +19,7 @@ import {
 import { DNA_REPORT_COVER } from "@/lib/imagery";
 import { DNA_TONE_ACCENT, DNA_TONE_CLASS, Gauge, HelixArt } from "@/components/dna-art";
 import { CheckIcon, DnaReportIcon, HelixIcon, KitIcon, WhatsAppGlyph } from "@/components/dna-icons";
+import { SkinScience } from "@/components/skin-science";
 
 type PageProps = { params: Promise<{ locale: string; report: string }> };
 
@@ -258,6 +259,8 @@ export default async function DnaReportPage({ params }: PageProps) {
           </div>
         </aside>
       </section>
+
+      {report.slug === "skin" ? <SkinScience loc={loc} /> : null}
 
       {/* Caution + hand-off --------------------------------------------- */}
       {report.caution || report.extra ? (
