@@ -42,13 +42,19 @@ const NAV = {
   },
 } as const;
 
-/** Official Invita lockup (gold mark + wordmark) with a "DNA Lab" tag. */
+/**
+ * Official Invita lockup (gold mark + wordmark) with a "DNA Lab" tag.
+ * `compact` drops the tag on phones narrower than 420px, where the header
+ * row has no room for it beside the language toggle and Order button.
+ */
 export function InvitaLogo({
   lab,
   tone = "light",
+  compact = false,
 }: {
   lab: string;
   tone?: "light" | "dark";
+  compact?: boolean;
 }) {
   const wordmark = tone === "dark" ? INVITA_LOGO.wordmarkIvory : INVITA_LOGO.wordmarkNavy;
   return (
@@ -73,7 +79,7 @@ export function InvitaLogo({
         dir="auto"
         className={`rounded-full border border-[var(--iv-gold)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] ${
           tone === "dark" ? "text-[var(--iv-gold)]" : "text-[var(--iv-gold-ink)]"
-        }`}
+        } ${compact ? "hidden min-[420px]:inline" : ""}`}
       >
         {lab}
       </span>
@@ -87,7 +93,7 @@ export function InvitaHeader({ locale }: { locale: Locale }) {
     <header className="sticky top-0 z-40 border-b border-[var(--iv-line)]/70 bg-[color-mix(in_srgb,var(--iv-paper)_82%,transparent)] backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:h-[4.5rem] sm:px-6">
         <Link href="/" aria-label={t.home} className="shrink-0">
-          <InvitaLogo lab={t.lab} />
+          <InvitaLogo lab={t.lab} compact />
         </Link>
         <nav aria-label="Invita DNA" className="hidden items-center gap-1 lg:flex">
           {t.links.map((l) => (
@@ -112,10 +118,12 @@ export function InvitaHeader({ locale }: { locale: Locale }) {
             href={invitaWhatsappUrl(t.orderMsg)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--iv-navy)] px-5 text-sm font-semibold text-[var(--iv-cream)] shadow-[var(--iv-glow)] transition hover:bg-[var(--iv-night)]"
+            aria-label={t.order}
+            className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--iv-navy)] px-3 text-sm font-semibold text-[var(--iv-cream)] shadow-[var(--iv-glow)] transition hover:bg-[var(--iv-night)] min-[360px]:px-5"
           >
             <WhatsAppGlyph />
-            {t.order}
+            {/* Icon-only below 360px so the header row fits a 320px phone. */}
+            <span className="hidden min-[360px]:inline">{t.order}</span>
           </a>
         </div>
       </div>
