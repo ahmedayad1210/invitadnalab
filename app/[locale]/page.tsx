@@ -141,6 +141,17 @@ const COPY = {
       "Carrier genes you could pass on",
       "Raw data you can re-analyse later",
     ],
+    sevenName: "Invita Seven",
+    sevenTitle: { lead: "Read by ", accent: "24Genetics", tail: ", explained by Invita." },
+    sevenBody:
+      "Invita Seven brings all seven reports from one cheek swab: health, nutrition, medicines, fitness, skin, personality and ancestry. Our laboratory partner 24Genetics runs the analysis in Madrid, and our medical team walks you through the results.",
+    sevenBullets: [
+      "Every report from one sample",
+      "Insights that connect the reports",
+      "Private walkthrough with our medical team",
+      "Better value than single reports",
+    ],
+    sevenCta: "Order Invita Seven",
     genomeCta: "Ask about Invita Genome",
     genomeMsg: "Hi Invita, I'd like to know more about whole genome sequencing (Invita Genome).",
     compareTitle: { lead: "Read a few key lines, or ", accent: "the whole book", tail: "." },
@@ -215,7 +226,7 @@ const COPY = {
         a: "Tests for anyone under 18 must be booked and consented to by a parent or legal guardian. Message us and we'll advise which reports are appropriate.",
       },
     ],
-    helpCaption: "Invita DNA Lab",
+    helpCaption: "Stop guessing. Start knowing.",
     helpTitle: "How can we help you?",
     helpBody:
       "Curious about one report, ready for your whole genome, or holding results from another lab? Message us and we'll point you to the right test.",
@@ -317,6 +328,17 @@ const COPY = {
       "جينات حاملة قد تنتقل لأطفالك",
       "بيانات خام يمكن إعادة تحليلها لاحقًا",
     ],
+    sevenName: "Invita سفن",
+    sevenTitle: { lead: "يقرؤها ", accent: "24Genetics", tail: "، ويشرحها فريق Invita." },
+    sevenBody:
+      "يجمع Invita سفن التقارير السبعة كلها من مسحة خدّ واحدة: الصحة والتغذية والأدوية واللياقة والبشرة والشخصية والأصول. يجري شريكنا المخبري 24Genetics التحليل في مدريد، ويشرح لك فريقنا الطبي النتائج.",
+    sevenBullets: [
+      "كل التقارير من عيّنة واحدة",
+      "رؤى مترابطة بين التقارير",
+      "مراجعة خاصة مع فريقنا الطبي",
+      "قيمة أفضل من التقارير المنفردة",
+    ],
+    sevenCta: "اطلب Invita سفن",
     genomeCta: "اسأل عن Invita جينوم",
     genomeMsg: "مرحبًا Invita، أرغب بمعرفة المزيد عن تسلسل الجينوم الكامل (Invita جينوم).",
     compareTitle: { lead: "اقرأ أهم السطور، أو ", accent: "الكتاب كاملًا", tail: "." },
@@ -391,7 +413,7 @@ const COPY = {
         a: "يجب أن يحجز فحوصات من هم دون ١٨ عامًا ويوافق عليها أحد الوالدين أو الوصي القانوني. راسلنا وسننصحك بالتقارير المناسبة.",
       },
     ],
-    helpCaption: "مختبر Invita للحمض النووي",
+    helpCaption: "توقّف عن التخمين. ابدأ بالمعرفة.",
     helpTitle: "كيف يمكننا مساعدتك؟",
     helpBody:
       "يثير فضولك تقرير واحد، أو تريد جينومك الكامل، أو لديك نتائج من مختبر آخر؟ راسلنا وسنرشدك إلى الفحص المناسب.",
@@ -427,6 +449,7 @@ export default async function InvitaDnaPage({ params }: PageProps) {
   const isRtl = loc === "ar";
   const arrow = isRtl ? "←" : "→";
   const genomePlan = DNA_PLANS.find((p) => p.id === "genome")!;
+  const sevenPlan = DNA_PLANS.find((p) => p.id === "seven")!;
   const numeral = (n: number) =>
     loc === "ar" ? n.toLocaleString("ar-IQ", { minimumIntegerDigits: 2 }) : String(n).padStart(2, "0");
   const orderUrl = invitaWhatsappUrl(copy.orderMsg);
@@ -611,6 +634,38 @@ export default async function InvitaDnaPage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* Invita Seven × 24Genetics -------------------------------------- */}
+      <section className={`${wrap} grid items-center gap-12 border-t border-[var(--iv-line)] py-20 sm:py-24 lg:grid-cols-2`}>
+        <div className="lg:order-2">
+          <Image
+            src={DNA_IMAGES.sevenReportsKit.src}
+            alt={DNA_IMAGES.sevenReportsKit.alt[loc]}
+            width={DNA_IMAGES.sevenReportsKit.width}
+            height={DNA_IMAGES.sevenReportsKit.height}
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            className="h-auto w-full rounded-[var(--iv-radius)]"
+          />
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-[var(--iv-gold-ink)]">{copy.sevenName}</p>
+          <SlabHeading {...copy.sevenTitle} className="mt-2" />
+          <p className="mt-6 max-w-xl leading-relaxed text-[var(--iv-muted)]">{copy.sevenBody}</p>
+          <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+            {copy.sevenBullets.map((b) => (
+              <li key={b} className="flex items-start gap-3 text-sm font-medium text-[var(--iv-navy)]">
+                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[var(--iv-gold)]" aria-hidden />
+                {b}
+              </li>
+            ))}
+          </ul>
+          <a href={dnaPlanWhatsappUrl(sevenPlan, loc)} target="_blank" rel="noopener noreferrer" className={`${notch("navy")} mt-9`}>
+            <WhatsAppGlyph />
+            {copy.sevenCta}
+            <ArrowLong />
+          </a>
+        </div>
+      </section>
+
       {/* Reports -------------------------------------------------------- */}
       <section id="reports" className="scroll-mt-28 bg-[var(--iv-mist)] py-20 sm:py-24">
         <div className={wrap}>
@@ -708,26 +763,24 @@ export default async function InvitaDnaPage({ params }: PageProps) {
         <div className={wrap}>
           <SlabHeading {...copy.igTitle} center />
           <p className="mx-auto mt-5 max-w-xl text-center text-[var(--iv-muted)]">{copy.igBody}</p>
-          <ul className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {INVITA_INSTAGRAM_POSTS.map((post, i) => (
-              <li
-                key={post.src}
-                className={i === 0 ? "col-span-2 row-span-2 aspect-square" : i === 2 ? "row-span-2" : "aspect-square"}
-              >
+          {/* Posts keep their own proportions, so they flow as columns. */}
+          <ul className="mt-14 columns-2 gap-3 sm:gap-4 lg:columns-4">
+            {INVITA_INSTAGRAM_POSTS.map((post) => (
+              <li key={post.src} className="mb-3 break-inside-avoid sm:mb-4">
                 <a
                   href={post.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${post.caption[loc]} — ${copy.igOpen}`}
-                  className="group relative block h-full overflow-hidden rounded-[var(--iv-radius)] bg-[var(--iv-navy)] shadow-[0_24px_50px_-34px_rgba(15,35,65,0.6)]"
+                  className="group relative block overflow-hidden rounded-[var(--iv-radius)] bg-[var(--iv-navy)] shadow-[0_24px_50px_-34px_rgba(15,35,65,0.6)]"
                 >
                   <Image
                     src={post.src}
                     alt={post.alt[loc]}
-                    fill
-                    sizes={i === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
-                    className="object-cover transition duration-700 group-hover:scale-[1.04]"
-                    style={{ objectPosition: post.position }}
+                    width={post.width}
+                    height={post.height}
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                    className="h-auto w-full transition duration-700 group-hover:scale-[1.03]"
                   />
                   <span
                     className="absolute end-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-[var(--iv-navy)]"
@@ -738,12 +791,12 @@ export default async function InvitaDnaPage({ params }: PageProps) {
                 </a>
               </li>
             ))}
-            <li className="aspect-square">
+            <li className="mb-3 break-inside-avoid sm:mb-4">
               <a
                 href={INVITA_DNA_INSTAGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex h-full flex-col justify-between rounded-[var(--iv-radius)] bg-white p-5 text-[var(--iv-navy)] shadow-[0_24px_50px_-34px_rgba(15,35,65,0.6)] transition hover:bg-[var(--iv-cream)] sm:p-6"
+                className="group flex aspect-square flex-col justify-between rounded-[var(--iv-radius)] bg-white p-5 text-[var(--iv-navy)] shadow-[0_24px_50px_-34px_rgba(15,35,65,0.6)] transition hover:bg-[var(--iv-cream)] sm:p-6"
               >
                 <Image src={INVITA_LOGO.markNavy.src} width={INVITA_LOGO.markNavy.width} height={INVITA_LOGO.markNavy.height} alt="" className="h-10 w-10" />
                 <div>
@@ -827,7 +880,7 @@ export default async function InvitaDnaPage({ params }: PageProps) {
         <Image src={DNA_IMAGES.ancestry.src} alt="" fill sizes="100vw" className="-z-20 object-cover" style={{ objectPosition: "50% 35%" }} />
         <div className="absolute inset-0 -z-10 bg-[color-mix(in_srgb,var(--iv-navy)_88%,transparent)]" aria-hidden />
         <div className={`${wrap} py-20 text-center sm:py-24`}>
-          <p className="text-xs font-semibold text-[var(--iv-gold)] ltr:uppercase ltr:tracking-[0.4em]">{copy.helpCaption}</p>
+          <p className="text-xs font-semibold text-[var(--iv-gold)] ltr:uppercase ltr:tracking-[0.3em]">{copy.helpCaption}</p>
           <h2 className="iv-slab mx-auto mt-5 max-w-3xl text-[clamp(2rem,1.3rem+3vw,3.5rem)] leading-[1.08]">{copy.helpTitle}</h2>
           <p className="mx-auto mt-5 max-w-2xl text-white/75 sm:text-lg">{copy.helpBody}</p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">

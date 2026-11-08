@@ -48,7 +48,7 @@ export function HeroSlider({
         aria-label={`${labels.slide} ${index + 1} / ${total}`}
         aria-live="polite"
       >
-        <h1 className="iv-slab text-balance text-[clamp(2.4rem,1.4rem+3.8vw,4.25rem)] leading-[1.06] text-[var(--iv-navy)]">
+        <h1 className="iv-slab text-balance text-[clamp(2.4rem,1.4rem+3.8vw,4.25rem)] leading-[1.06] text-[var(--iv-navy)] rtl:leading-[1.3]">
           {slide.lead}
           <span className="text-[var(--iv-gold-deep)]">{slide.accent}</span>
           {slide.tail}

@@ -5,10 +5,12 @@ import type { ElementType } from "react";
  * short rule, the long arrow, and the notched button styles.
  */
 
+// Arabic letters reach further below the line than Latin, so RTL headlines
+// get more leading to keep descenders off the rule and the next line.
 const SIZES = {
-  xl: "text-[clamp(2.4rem,1.4rem+3.8vw,4.25rem)] leading-[1.06]",
-  lg: "text-[clamp(1.9rem,1.25rem+2.4vw,3rem)] leading-[1.12]",
-  md: "text-[clamp(1.6rem,1.2rem+1.4vw,2.25rem)] leading-[1.15]",
+  xl: "text-[clamp(2.4rem,1.4rem+3.8vw,4.25rem)] leading-[1.06] rtl:leading-[1.3]",
+  lg: "text-[clamp(1.9rem,1.25rem+2.4vw,3rem)] leading-[1.12] rtl:leading-[1.35]",
+  md: "text-[clamp(1.6rem,1.2rem+1.4vw,2.25rem)] leading-[1.15] rtl:leading-[1.4]",
 } as const;
 
 export function SlabHeading({

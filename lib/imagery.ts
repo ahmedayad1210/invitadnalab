@@ -122,6 +122,25 @@ export const DNA_IMAGES = {
     },
     position: "60% 35%",
   },
+  coverSports: {
+    src: `${DIR}/covers/sports.webp`,
+    width: 1122,
+    height: 800,
+    alt: {
+      en: "A woman lifting a dumbbell overhead in a gym, seen from behind",
+      ar: "امرأة ترفع دمبل فوق رأسها في صالة رياضية، من الخلف",
+    },
+    position: "50% 30%",
+  },
+  sevenReportsKit: {
+    src: `${DIR}/seven-reports-kit.webp`,
+    width: 1122,
+    height: 765,
+    alt: {
+      en: "24Genetics report booklets standing around a 24Genetics test kit box",
+      ar: "كتيّبات تقارير 24Genetics حول علبة فحص 24Genetics",
+    },
+  },
 } satisfies Record<string, DnaImage>;
 
 export type DnaVideo = { src: string; poster: string; width: number; height: number };
@@ -139,6 +158,7 @@ export const DNA_REPORT_COVER: Partial<Record<DnaReportSlug, DnaImage>> = {
   ancestry: DNA_IMAGES.ancestry,
   health: DNA_IMAGES.coverHealth,
   pharma: DNA_IMAGES.coverPharma,
+  sports: DNA_IMAGES.coverSports,
   skin: DNA_IMAGES.coverSkin,
   personality: DNA_IMAGES.coverPersonality,
   "all-in-one": DNA_IMAGES.helix,
@@ -148,13 +168,59 @@ export type InstagramPost = DnaImage & { href: string; caption: Localized };
 
 const post = (code: string) => `https://www.instagram.com/p/${code}/`;
 
-/** People-free posts from Invita's Instagram, newest DNA posts first. */
+const PROFILE = "https://www.instagram.com/invitadnalab/";
+
+/** Posts from Invita's Instagram, newest first. The Invita DNA × 24Genetics posts link to the profile. */
 export const INVITA_INSTAGRAM_POSTS: InstagramPost[] = [
+  {
+    src: `${DIR}/instagram/seven-reports.webp`,
+    width: 900,
+    height: 1125,
+    href: PROFILE,
+    caption: { en: "One genetic test. Seven complete reports.", ar: "فحص جيني واحد. ٧ تقارير شاملة." },
+    alt: {
+      en: "Invita DNA × 24Genetics post: 24Genetics report booklets around a test kit, under the headline one genetic test, seven complete reports",
+      ar: "منشور Invita DNA × 24Genetics: كتيّبات تقارير 24Genetics حول علبة الفحص، تحت عنوان فحص جيني واحد، ٧ تقارير شاملة",
+    },
+  },
+  {
+    src: `${DIR}/instagram/strength.webp`,
+    width: 900,
+    height: 1125,
+    href: PROFILE,
+    caption: { en: "Your genes play a part in your strength.", ar: "لجيناتك دور في قوتك." },
+    alt: {
+      en: "Invita DNA × 24Genetics post: a woman lifting a dumbbell, with the line your genes play a part in your strength",
+      ar: "منشور Invita DNA × 24Genetics: امرأة ترفع دمبل مع عبارة لجيناتك دور في قوتك",
+    },
+  },
+  {
+    src: `${DIR}/instagram/vitamin-d.webp`,
+    width: 900,
+    height: 1125,
+    href: PROFILE,
+    caption: { en: "The sun alone may not be enough.", ar: "الشمس وحدها قد لا تكفي." },
+    alt: {
+      en: "Invita DNA × 24Genetics post on vitamin D: your genetics may influence how you absorb, transport and maintain it",
+      ar: "منشور Invita DNA × 24Genetics عن فيتامين د: قد تؤثّر جيناتك في امتصاصه ونقله والحفاظ عليه",
+    },
+  },
+  {
+    src: `${DIR}/instagram/guess-to-know.webp`,
+    width: 900,
+    height: 1125,
+    href: PROFILE,
+    caption: { en: "From guessing to scientific knowledge.", ar: "من التخمين إلى المعرفة العلمية." },
+    alt: {
+      en: "Invita DNA × 24Genetics post over a DNA helix: from guessing to scientific knowledge, about the nutrigenetics test",
+      ar: "منشور Invita DNA × 24Genetics فوق حلزون DNA: من التخمين إلى المعرفة العلمية، عن فحص التغذية الجيني",
+    },
+  },
   {
     src: `${DIR}/instagram/our-dna.webp`,
     width: 900,
     height: 900,
-    href: "https://www.instagram.com/invitadnalab/",
+    href: PROFILE,
     caption: { en: "Our DNA. Your health. Reimagined.", ar: "حمضنا النووي. صحتك. برؤية جديدة." },
     alt: {
       en: "Invita DNA Lab post: a human figure drawn as a glowing network of points, listing the reports Invita DNA Lab offers",
