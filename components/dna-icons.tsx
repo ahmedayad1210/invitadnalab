@@ -152,6 +152,41 @@ export function NetworkIcon({ className = "h-6 w-6" }: IconProps) {
   );
 }
 
+/** Van with a snowflake — the sealed sample's cold-chain trip to the lab. */
+export function TruckIcon({ className = "h-6 w-6" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M2.5 6.5h11v9h-11z" />
+      <path d="M13.5 9.5h4l3 3.2v2.8h-7" />
+      <circle cx="6.5" cy="17.5" r="1.8" />
+      <circle cx="16.5" cy="17.5" r="1.8" />
+      <path d="M8 8.6v4.8M5.9 9.8l4.2 2.4M10.1 9.8l-4.2 2.4" />
+    </svg>
+  );
+}
+
+/** Flask with a strand inside — laboratory analysis. */
+export function FlaskIcon({ className = "h-6 w-6" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M9.5 3.5h5M10.5 3.5v5.2L5 18.3a1.6 1.6 0 0 0 1.4 2.2h11.2a1.6 1.6 0 0 0 1.4-2.2l-5.5-9.6V3.5" />
+      <path d="M9 14.5c1.2-1.4 2.8-1.4 3 0s1.8 1.4 3 0" />
+    </svg>
+  );
+}
+
+/** Report page with a result bar — the finished report. */
+export function ReportIcon({ className = "h-6 w-6" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M6 3.5h8.5l3.5 3.5v13.5H6z" />
+      <path d="M14.5 3.5V7H18" />
+      <path d="M9 11h6M9 14.5h3.5" />
+      <path d="M9 17.5h6" strokeWidth={2.4} />
+    </svg>
+  );
+}
+
 export function InstagramGlyph({ className = "h-4 w-4" }: IconProps) {
   return (
     <svg {...base} className={className}>
