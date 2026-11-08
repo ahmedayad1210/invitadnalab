@@ -15,7 +15,7 @@ import {
   invitaWhatsappUrl,
   type DnaPlan,
 } from "@/lib/reports";
-import { DNA_IMAGES, DNA_REPORT_COVER, DNA_VIDEOS, INVITA_INSTAGRAM_POSTS, INVITA_LOGO } from "@/lib/imagery";
+import { DNA_IMAGES, DNA_REPORT_COVER, DNA_VIDEOS, INVITA_INSTAGRAM_POSTS, INVITA_LOGO, INVITA_STORIES } from "@/lib/imagery";
 import { CoverageStrip, DNA_TONE_ACCENT, DNA_TONE_CLASS, Gauge, KitArt } from "@/components/dna-art";
 import {
   ChatIcon,
@@ -180,6 +180,8 @@ const COPY = {
     igFollow: "Follow @invitadnalab",
     igTileBody: "Genetics, explained in Arabic & English.",
     igOpen: "Open on Instagram",
+    storiesTitle: "Stories",
+    storiesNote: "In Arabic, from Invita DNA Lab × 24Genetics.",
     ivTitle: "Also from Invita",
     ivBody: "Invita IV Vitamins Therapy: premium IV vitamin drips in Baghdad.",
     ivCta: "Visit invitadrips.com",
@@ -367,6 +369,8 @@ const COPY = {
     igFollow: "تابع ‎@invitadnalab",
     igTileBody: "علم الوراثة، بشرح واضح بالعربية والإنجليزية.",
     igOpen: "افتح على إنستغرام",
+    storiesTitle: "القصص",
+    storiesNote: "من Invita DNA Lab × 24Genetics.",
     ivTitle: "من Invita أيضًا",
     ivBody: "Invita للعلاج الوريدي بالفيتامينات: جلسات فيتامينات وريدية فاخرة في بغداد.",
     ivCta: "زُر invitadrips.com",
@@ -810,6 +814,35 @@ export default async function InvitaDnaPage({ params }: PageProps) {
               </a>
             </li>
           </ul>
+
+          {/* Stories: a sideways rail of 9:16 cards, scrolled by touch, trackpad or Tab. */}
+          <div className="mt-16">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <h3 className="iv-slab text-2xl text-[var(--iv-navy)]">{copy.storiesTitle}</h3>
+              <p className="text-sm text-[var(--iv-muted)]">{copy.storiesNote}</p>
+            </div>
+            <ul className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0">
+              {INVITA_STORIES.map((s) => (
+                <li key={s.src} className="w-40 shrink-0 snap-start sm:w-48 lg:w-52">
+                  <a
+                    href={INVITA_DNA_INSTAGRAM}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block overflow-hidden rounded-[var(--iv-radius)] shadow-[0_20px_40px_-28px_rgba(15,35,65,0.7)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--iv-navy)]"
+                  >
+                    <Image
+                      src={s.src}
+                      alt={s.alt[loc]}
+                      width={s.width}
+                      height={s.height}
+                      sizes="(min-width: 1024px) 13rem, (min-width: 640px) 12rem, 10rem"
+                      className="h-auto w-full"
+                    />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
