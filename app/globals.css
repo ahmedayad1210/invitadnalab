@@ -11,14 +11,16 @@
   --iv-gold: #d9b344;
   --iv-gold-soft: #ead48c;
   --iv-gold-ink: #7d6010; /* gold for text on light surfaces (AA) */
+  --iv-gold-deep: #a8821a; /* headline accent on white: 3.6:1, for large text only */
   --iv-cream: #f0ede4;
-  --iv-paper: #f7f5ef;
+  --iv-paper: #ffffff;
+  --iv-mist: #f2f4f8; /* cool alternate band, the clinical counterpart to cream */
   --iv-sand: #e8e1d0;
-  --iv-line: #ddd6c6;
+  --iv-line: #dde2ea;
   --iv-sky: #d4dcef;
   --iv-sky-deep: #a0b1dd;
   --iv-muted: #525c75;
-  --iv-radius: 28px;
+  --iv-radius: 10px; /* clinical: crisp corners, not pills */
   --iv-glow: 0 18px 50px -24px rgba(217, 179, 68, 0.55);
 
   font-family: var(--font-alexandria), system-ui, sans-serif;
@@ -47,46 +49,6 @@
   background-size: 3px 3px;
 }
 
-.iv-marquee {
-  animation: iv-marquee 40s linear infinite;
-}
-
-@keyframes iv-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-[dir="rtl"] .iv-marquee {
-  animation-name: iv-marquee-rtl;
-}
-
-@keyframes iv-marquee-rtl {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(50%);
-  }
-}
-
-.iv-float {
-  animation: iv-float 8s ease-in-out infinite;
-}
-
-@keyframes iv-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
 .iv-pulse {
   animation: iv-pulse 2.8s ease-in-out infinite;
 }
@@ -102,9 +64,73 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .iv-marquee,
-  .iv-float,
   .iv-pulse {
+    animation: none;
+  }
+}
+
+/* ===== Clinical layer =====
+   Slab-serif headlines over the Alexandria body. Roboto Slab has no Arabic
+   glyphs, so Arabic headlines fall through to Alexandria at the same weight. */
+.iv-slab {
+  font-family: var(--font-slab), var(--font-alexandria), system-ui, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+/* Page and section titles on every page take the slab too, at their own weight. */
+.invita :is(h1, h2) {
+  font-family: var(--font-slab), var(--font-alexandria), system-ui, serif;
+}
+
+/* Short two-stop rule under a headline. */
+.iv-bar {
+  display: block;
+  height: 3px;
+  width: 4rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--iv-navy) 0 55%, var(--iv-gold) 55% 100%);
+}
+[dir="rtl"] .iv-bar {
+  background: linear-gradient(270deg, var(--iv-navy) 0 55%, var(--iv-gold) 55% 100%);
+}
+
+/* Buttons with one clipped corner, at the trailing bottom edge. */
+.iv-notch {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+[dir="rtl"] .iv-notch {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+/* Faint lab grid behind the hero visual. */
+.iv-gridlines {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--iv-sky-deep) 28%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--iv-sky-deep) 28%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Molecule network: nodes and bonds, drawn once as an inline SVG tile. */
+.iv-molecules {
+  background-color: var(--iv-mist);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='200' fill='none' stroke='%23a0b1dd' stroke-opacity='.45'%3E%3Cpath d='M20 40l50 30 60-20 40 50-30 60M70 70l10 70 70 30M130 50l70-30M170 100l50-10M80 140l-50 30'/%3E%3Cg fill='%23f2f4f8'%3E%3Ccircle cx='20' cy='40' r='4'/%3E%3Ccircle cx='70' cy='70' r='6'/%3E%3Ccircle cx='130' cy='50' r='3'/%3E%3Ccircle cx='170' cy='100' r='7'/%3E%3Ccircle cx='140' cy='160' r='4'/%3E%3Ccircle cx='80' cy='140' r='3'/%3E%3Ccircle cx='200' cy='20' r='3'/%3E%3Ccircle cx='220' cy='90' r='4'/%3E%3Ccircle cx='30' cy='170' r='5'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.iv-fade {
+  animation: iv-fade 0.5s ease-out both;
+}
+@keyframes iv-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .iv-fade {
     animation: none;
   }
 }

@@ -3,8 +3,10 @@ import type { DnaReportSlug } from "@/lib/reports";
 
 /**
  * Invita DNA Lab imagery: official Invita logo files, Invita's own report
- * covers (`public/images/covers/`) and posts from Invita's Instagram. Files
- * live in `public/images/`.
+ * covers (`public/images/covers/`), posts and stories from Invita's
+ * Instagram (`instagram/`, `stories/`). Most covers and the skin-page photos
+ * are crops of the stories, clear of their text. Files live in
+ * `public/images/`.
  */
 const DIR = "/images";
 
@@ -63,34 +65,34 @@ export const DNA_IMAGES = {
     position: "50% 45%",
   },
   coverHealth: {
-    src: `${DIR}/covers/health.webp`,
-    width: 735,
-    height: 1103,
+    src: `${DIR}/covers/health-generations.webp`,
+    width: 900,
+    height: 1050,
     alt: {
       en: "A laughing grandfather lifting his granddaughter in a sunlit room",
       ar: "جدّ يضحك وهو يرفع حفيدته في غرفة مشمسة",
     },
-    position: "50% 55%",
-  },
-  coverSkin: {
-    src: `${DIR}/covers/skin.webp`,
-    width: 736,
-    height: 1308,
-    alt: {
-      en: "Close-up of a smiling woman with freckled skin, eyes closed, a hand resting on her cheek",
-      ar: "صورة قريبة لامرأة مبتسمة ببشرة منمّشة، عيناها مغمضتان ويدها على خدّها",
-    },
     position: "50% 40%",
   },
-  coverPersonality: {
-    src: `${DIR}/covers/personality.webp`,
-    width: 735,
-    height: 1101,
+  coverSkin: {
+    src: `${DIR}/covers/skin-portrait.webp`,
+    width: 900,
+    height: 833,
     alt: {
-      en: "A woman with her eyes closed and face turned to warm sunlight, hair lifting in the breeze",
-      ar: "امرأة مغمضة العينين تستقبل بوجهها ضوء الشمس الدافئ وشعرها يتطاير مع النسيم",
+      en: "Profile of a woman with her hair swept up, in soft side light",
+      ar: "صورة جانبية لامرأة بشعر مرفوع في ضوء جانبي ناعم",
     },
-    position: "55% 60%",
+    position: "55% 35%",
+  },
+  coverPersonality: {
+    src: `${DIR}/covers/personality-grass.webp`,
+    width: 900,
+    height: 800,
+    alt: {
+      en: "A freckled woman lying in long grass, eyes closed, smiling in the sun",
+      ar: "امرأة منمّشة مستلقية بين العشب الطويل، مغمضة العينين تبتسم تحت الشمس",
+    },
+    position: "50% 40%",
   },
   coverPharma: {
     src: `${DIR}/covers/pharma.webp`,
@@ -103,24 +105,53 @@ export const DNA_IMAGES = {
     position: "50% 45%",
   },
   skinClock: {
-    src: `${DIR}/skin/clock.webp`,
-    width: 480,
+    src: `${DIR}/skin/eye.webp`,
+    width: 900,
     height: 800,
     alt: {
-      en: "A young face and an older face cheek to cheek, showing how skin changes with age",
-      ar: "وجه شاب ووجه مسنّ متلاصقان، يُظهران كيف تتغيّر البشرة مع العمر",
+      en: "Close-up of an eye and the freckled skin around it, in warm light",
+      ar: "صورة قريبة لعين وبشرة منمّشة حولها في ضوء دافئ",
     },
-    position: "50% 40%",
+    position: "50% 45%",
   },
   skinMoss: {
-    src: `${DIR}/skin/moss.webp`,
-    width: 564,
-    height: 1002,
+    src: `${DIR}/skin/moss-story.webp`,
+    width: 900,
+    height: 792,
     alt: {
       en: "A woman resting her face on soft green moss in the sun",
       ar: "امرأة تُسند وجهها إلى طحلب أخضر ناعم تحت الشمس",
     },
-    position: "60% 35%",
+    position: "60% 40%",
+  },
+  coverNutrition: {
+    src: `${DIR}/covers/nutrition-orange.webp`,
+    width: 900,
+    height: 800,
+    alt: {
+      en: "Two hands holding a fresh orange with its leaves against a blue sky",
+      ar: "يدان تحملان برتقالة طازجة بأوراقها على خلفية سماء زرقاء",
+    },
+    position: "50% 35%",
+  },
+  coverSports: {
+    src: `${DIR}/covers/sports.webp`,
+    width: 1122,
+    height: 800,
+    alt: {
+      en: "A woman lifting a dumbbell overhead in a gym, seen from behind",
+      ar: "امرأة ترفع دمبل فوق رأسها في صالة رياضية، من الخلف",
+    },
+    position: "50% 30%",
+  },
+  sevenReportsKit: {
+    src: `${DIR}/seven-reports-kit.webp`,
+    width: 1122,
+    height: 765,
+    alt: {
+      en: "24Genetics report booklets standing around a 24Genetics test kit box",
+      ar: "كتيّبات تقارير 24Genetics حول علبة فحص 24Genetics",
+    },
   },
 } satisfies Record<string, DnaImage>;
 
@@ -138,7 +169,9 @@ export const DNA_VIDEOS = {
 export const DNA_REPORT_COVER: Partial<Record<DnaReportSlug, DnaImage>> = {
   ancestry: DNA_IMAGES.ancestry,
   health: DNA_IMAGES.coverHealth,
+  nutrition: DNA_IMAGES.coverNutrition,
   pharma: DNA_IMAGES.coverPharma,
+  sports: DNA_IMAGES.coverSports,
   skin: DNA_IMAGES.coverSkin,
   personality: DNA_IMAGES.coverPersonality,
   "all-in-one": DNA_IMAGES.helix,
@@ -148,13 +181,59 @@ export type InstagramPost = DnaImage & { href: string; caption: Localized };
 
 const post = (code: string) => `https://www.instagram.com/p/${code}/`;
 
-/** People-free posts from Invita's Instagram, newest DNA posts first. */
+const PROFILE = "https://www.instagram.com/invitadnalab/";
+
+/** Posts from Invita's Instagram, newest first. The Invita DNA × 24Genetics posts link to the profile. */
 export const INVITA_INSTAGRAM_POSTS: InstagramPost[] = [
+  {
+    src: `${DIR}/instagram/seven-reports.webp`,
+    width: 900,
+    height: 1125,
+    href: PROFILE,
+    caption: { en: "One genetic test. Seven complete reports.", ar: "فحص جيني واحد. ٧ تقارير شاملة." },
+    alt: {
+      en: "Invita DNA × 24Genetics post: 24Genetics report booklets around a test kit, under the headline one genetic test, seven complete reports",
+      ar: "منشور Invita DNA × 24Genetics: كتيّبات تقارير 24Genetics حول علبة الفحص، تحت عنوان فحص جيني واحد، ٧ تقارير شاملة",
+    },
+  },
+  {
+    src: `${DIR}/instagram/strength.webp`,
+    width: 900,
+    height: 1125,
+    href: PROFILE,
+    caption: { en: "Your genes play a part in your strength.", ar: "لجيناتك دور في قوتك." },
+    alt: {
+      en: "Invita DNA × 24Genetics post: a woman lifting a dumbbell, with the line your genes play a part in your strength",
+      ar: "منشور Invita DNA × 24Genetics: امرأة ترفع دمبل مع عبارة لجيناتك دور في قوتك",
+    },
+  },
+  {
+    src: `${DIR}/instagram/vitamin-d.webp`,
+    width: 900,
+    height: 1125,
+    href: PROFILE,
+    caption: { en: "The sun alone may not be enough.", ar: "الشمس وحدها قد لا تكفي." },
+    alt: {
+      en: "Invita DNA × 24Genetics post on vitamin D: your genetics may influence how you absorb, transport and maintain it",
+      ar: "منشور Invita DNA × 24Genetics عن فيتامين د: قد تؤثّر جيناتك في امتصاصه ونقله والحفاظ عليه",
+    },
+  },
+  {
+    src: `${DIR}/instagram/guess-to-know.webp`,
+    width: 900,
+    height: 1125,
+    href: PROFILE,
+    caption: { en: "From guessing to scientific knowledge.", ar: "من التخمين إلى المعرفة العلمية." },
+    alt: {
+      en: "Invita DNA × 24Genetics post over a DNA helix: from guessing to scientific knowledge, about the nutrigenetics test",
+      ar: "منشور Invita DNA × 24Genetics فوق حلزون DNA: من التخمين إلى المعرفة العلمية، عن فحص التغذية الجيني",
+    },
+  },
   {
     src: `${DIR}/instagram/our-dna.webp`,
     width: 900,
     height: 900,
-    href: "https://www.instagram.com/invitadnalab/",
+    href: PROFILE,
     caption: { en: "Our DNA. Your health. Reimagined.", ar: "حمضنا النووي. صحتك. برؤية جديدة." },
     alt: {
       en: "Invita DNA Lab post: a human figure drawn as a glowing network of points, listing the reports Invita DNA Lab offers",
@@ -184,4 +263,37 @@ export const INVITA_INSTAGRAM_POSTS: InstagramPost[] = [
     },
     position: "50% 40%",
   },
+];
+
+export type InvitaStory = { src: string; width: number; height: number; alt: Localized };
+
+const story = (file: string, en: string, ar: string): InvitaStory => ({
+  src: `${DIR}/stories/${file}.webp`,
+  width: 720,
+  height: 1280,
+  alt: {
+    en: `Invita DNA Lab × 24Genetics story in Arabic: ${en}`,
+    ar: `قصة من Invita DNA Lab × 24Genetics: ${ar}`,
+  },
+});
+
+/** Invita DNA Lab × 24Genetics Instagram stories (Arabic, 9:16), in the pack's order. */
+export const INVITA_STORIES: InvitaStory[] = [
+  story("01-portrait", "Your genes are part of your story. Discover what makes you you.", "جيناتك جزء من حكايتك. اكتشف ما يميّزك."),
+  story("02-apples", "Same food, a different response? Your nutritional needs deserve a personal understanding.", "نفس الأكل... استجابة مختلفة؟ احتياجاتك الغذائية تستحق فهمًا شخصيًا."),
+  story("03-twins", "We look alike, yet each of us keeps our own details.", "نتشابه... وتبقى لكلٍّ منّا تفاصيله."),
+  story("04-park", "Your genes begin the story; your daily choices complete it.", "جيناتك بداية الحكاية، واختياراتك اليومية تكملها."),
+  story("05-landscape", "Your body is more than genes. Your lifestyle is part of the picture.", "جسمك أكثر من جينات. نمط حياتك جزء من الصورة."),
+  story("06-grass", "Understand what makes you different. Deeper knowledge starts with a question.", "افهم ما يميّزك. معرفة أعمق تبدأ بسؤال."),
+  story("07-orange", "Your food deserves a conscious choice. Discover the Nutrition DNA Report.", "غذاؤك يستحق اختيارًا واعيًا. تعرّف على تقرير التغذية الجيني."),
+  story("08-leaf", "What suits others may differ from what suits you.", "ما يناسب غيرك قد يختلف عمّا يناسبك."),
+  story("09-hands", "Small details make you different. Discover a side of your genetic story.", "تفاصيل صغيرة... تميّزك. اكتشف جانبًا من قصتك الجينية."),
+  story("10-coffee", "Your coffee and your genetic story. Ask about caffeine in the Nutrition report.", "قهوتك... وقصتك الجينية. اسأل عن معلومات الكافيين في تقرير التغذية."),
+  story("11-meditation", "Your genes and your lifestyle: sleep, movement and habits complete the picture.", "جيناتك... ونمط حياتك. نومك وحركتك وعاداتك تكمل الصورة."),
+  story("12-eye", "You have your own fingerprint. Discover a side of your genetic uniqueness.", "لك بصمتك الخاصة. اكتشف جانبًا من تفرّدك الجيني."),
+  story("13-mushroom", "Your needs are yours alone. Start with a deeper understanding of your nutrition.", "احتياجاتك تخصّك. ابدأ بفهمٍ أعمق لتغذيتك."),
+  story("14-arms", "Start with knowledge. Save the idea and share it with someone who matters to you.", "ابدأ بالمعرفة. احفظ الفكرة... وشاركها مع من يهمّك."),
+  story("16-ancestry", "Where does your story begin? Discover the Ancestry DNA Report.", "من أين تبدأ حكايتك؟ تعرّف على تقرير الأصول الجينية."),
+  story("17-generations", "Your story spans generations. Discover a side of your genetic story.", "حكايتك تمتدّ لأجيال. اكتشف جانبًا من قصتك الجينية."),
+  story("18-moss", "Your details make you different. Begin by understanding your genes.", "تفاصيلك تميّزك. ابدئي بفهم جيناتك."),
 ];

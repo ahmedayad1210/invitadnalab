@@ -12,6 +12,7 @@ import {
 import { INVITA_LOGO } from "@/lib/imagery";
 import { InvitaLocaleToggle } from "@/components/invita-locale-toggle";
 import { InstagramGlyph, PinIcon, WhatsAppGlyph } from "@/components/dna-icons";
+import { notch } from "@/components/brand-ui";
 
 const NAV = {
   en: {
@@ -19,7 +20,7 @@ const NAV = {
       { href: "/#plans", label: "Tests" },
       { href: "/#genome", label: "Whole genome" },
       { href: "/#reports", label: "Reports" },
-      { href: "/#how", label: "How it works" },
+      { href: "/#process", label: "How it works" },
     ],
     register: "Book home swab",
     order: "Order",
@@ -32,7 +33,7 @@ const NAV = {
       { href: "/#plans", label: "الفحوصات" },
       { href: "/#genome", label: "الجينوم الكامل" },
       { href: "/#reports", label: "التقارير" },
-      { href: "/#how", label: "كيف نعمل" },
+      { href: "/#process", label: "كيف نعمل" },
     ],
     register: "احجز مسحة منزلية",
     order: "اطلب",
@@ -90,17 +91,18 @@ export function InvitaLogo({
 export function InvitaHeader({ locale }: { locale: Locale }) {
   const t = NAV[locale];
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--iv-line)]/70 bg-[color-mix(in_srgb,var(--iv-paper)_82%,transparent)] backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-t-[3px] border-b border-t-[var(--iv-navy)] border-b-[var(--iv-line)] bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:h-[4.5rem] sm:px-6">
         <Link href="/" aria-label={t.home} className="shrink-0">
           <InvitaLogo lab={t.lab} compact />
         </Link>
-        <nav aria-label="Invita DNA" className="hidden items-center gap-1 lg:flex">
+        {/* Each link sits under a hairline that turns gold on hover. */}
+        <nav aria-label="Invita DNA" className="hidden items-stretch gap-2 self-stretch lg:flex">
           {t.links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-full px-4 py-2 text-sm font-medium text-[var(--iv-navy)]/80 transition hover:bg-[var(--iv-cream)] hover:text-[var(--iv-navy)]"
+              className="relative flex items-center px-4 text-sm font-medium text-[var(--iv-navy)]/75 transition before:absolute before:inset-x-2 before:top-0 before:h-px before:bg-[var(--iv-line)] before:transition-all hover:text-[var(--iv-navy)] hover:before:h-[3px] hover:before:bg-[var(--iv-gold)]"
             >
               {l.label}
             </Link>
@@ -108,10 +110,7 @@ export function InvitaHeader({ locale }: { locale: Locale }) {
         </nav>
         <div className="flex items-center gap-2">
           <InvitaLocaleToggle />
-          <Link
-            href="/book"
-            className="hidden h-10 items-center rounded-full px-4 text-sm font-semibold text-[var(--iv-navy)] ring-1 ring-[var(--iv-line)] transition hover:bg-[var(--iv-cream)] sm:inline-flex"
-          >
+          <Link href="/book" className={`${notch("line", "sm")} max-sm:hidden`}>
             {t.register}
           </Link>
           <a
@@ -119,31 +118,31 @@ export function InvitaHeader({ locale }: { locale: Locale }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t.order}
-            className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--iv-navy)] px-3 text-sm font-semibold text-[var(--iv-cream)] shadow-[var(--iv-glow)] transition hover:bg-[var(--iv-night)] min-[360px]:px-5"
+            className={notch("navy", "sm")}
           >
             <WhatsAppGlyph />
-            {/* Icon-only below 360px so the header row fits a 320px phone. */}
-            <span className="hidden min-[360px]:inline">{t.order}</span>
+            {/* Icon-only below 400px so the header row fits a narrow phone. */}
+            <span className="hidden min-[400px]:inline">{t.order}</span>
           </a>
         </div>
       </div>
       {/* Section links stay reachable on small screens as a scrollable row. */}
       <nav
         aria-label="Invita DNA"
-        className="flex gap-1 overflow-x-auto border-t border-[var(--iv-line)]/60 px-3 py-2 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden"
+        className="flex gap-1 overflow-x-auto border-t border-[var(--iv-line)] px-3 py-2 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden"
       >
         {t.links.map((l) => (
           <Link
             key={l.href}
             href={l.href}
-            className="shrink-0 rounded-full px-3 py-1.5 text-[13px] font-medium text-[var(--iv-navy)]/80 hover:bg-[var(--iv-cream)]"
+            className="shrink-0 px-3 py-1.5 text-[13px] font-medium text-[var(--iv-navy)]/80 hover:text-[var(--iv-navy)]"
           >
             {l.label}
           </Link>
         ))}
         <Link
           href="/book"
-          className="shrink-0 rounded-full px-3 py-1.5 text-[13px] font-semibold text-[var(--iv-gold-ink)] hover:bg-[var(--iv-cream)] sm:hidden"
+          className="shrink-0 px-3 py-1.5 text-[13px] font-semibold text-[var(--iv-gold-ink)] sm:hidden"
         >
           {t.register}
         </Link>
@@ -194,43 +193,30 @@ const FOOT = {
 export function InvitaFooter({ locale }: { locale: Locale }) {
   const t = FOOT[locale];
   const lab = NAV[locale].lab;
-  const linkCls = "text-sm text-[var(--iv-cream)]/70 transition hover:text-[var(--iv-cream)]";
+  const linkCls = "group inline-flex items-start gap-2 text-sm text-[var(--iv-muted)] transition hover:text-[var(--iv-navy)]";
+  const chip =
+    "inline-flex items-center gap-2 rounded-[var(--iv-radius)] px-4 py-2 text-sm font-semibold text-[var(--iv-navy)] ring-1 ring-[var(--iv-line)] hover:bg-[var(--iv-mist)]";
   return (
-    <footer className="iv-grain bg-[var(--iv-night)] text-[var(--iv-cream)]">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <footer className="border-t border-[var(--iv-line)] bg-white text-[var(--iv-navy)]">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <InvitaLogo lab={lab} tone="dark" />
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--iv-cream)]/70">{t.blurb}</p>
+          <InvitaLogo lab={lab} />
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-[var(--iv-muted)]">{t.blurb}</p>
           <div className="mt-6 flex flex-wrap gap-2">
-            <a
-              href={invitaWhatsappUrl(t.contactMsg)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--iv-gold)] px-4 py-2 text-sm font-semibold text-[var(--iv-navy)] hover:bg-[var(--iv-gold-soft)]"
-            >
+            <a href={invitaWhatsappUrl(t.contactMsg)} target="_blank" rel="noopener noreferrer" className={notch("navy", "sm")}>
               <WhatsAppGlyph />
               WhatsApp
             </a>
-            <a
-              href={INVITA_DNA_INSTAGRAM}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-white/25 hover:bg-white/10"
-              dir="ltr"
-            >
+            <a href={INVITA_DNA_INSTAGRAM} target="_blank" rel="noopener noreferrer" className={chip} dir="ltr">
               <InstagramGlyph />
               @invitadnalab
             </a>
-            <a
-              href={`mailto:${INVITA_EMAIL}`}
-              className="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-white/25 hover:bg-white/10"
-              dir="ltr"
-            >
+            <a href={`mailto:${INVITA_EMAIL}`} className={chip} dir="ltr">
               {INVITA_EMAIL}
             </a>
           </div>
-          <p className="mt-5 inline-flex items-center gap-2 text-sm text-[var(--iv-cream)]/70">
-            <PinIcon className="h-4 w-4 text-[var(--iv-gold)]" />
+          <p className="mt-5 inline-flex items-center gap-2 text-sm text-[var(--iv-muted)]">
+            <PinIcon className="h-4 w-4 text-[var(--iv-gold-deep)]" />
             {INVITA_ADDRESS[locale]}
           </p>
         </div>
@@ -238,35 +224,49 @@ export function InvitaFooter({ locale }: { locale: Locale }) {
           {DNA_SINGLE_REPORTS.map((r) => (
             <li key={r.slug}>
               <Link href={`/${r.slug}`} className={linkCls}>
+                <Caret />
                 {r.title[locale]}
               </Link>
             </li>
           ))}
         </FooterCol>
         <FooterCol title={t.help}>
-          <li><Link href="/book" className={linkCls}>{t.register}</Link></li>
+          <li>
+            <Link href="/book" className={linkCls}>
+              <Caret />
+              {t.register}
+            </Link>
+          </li>
           <li>
             <a href={invitaWhatsappUrl(t.uploadMsg)} target="_blank" rel="noopener noreferrer" className={linkCls}>
+              <Caret />
               {t.upload}
             </a>
           </li>
-          <li><Link href="/#faq" className={linkCls}>{t.faq}</Link></li>
+          <li>
+            <Link href="/#faq" className={linkCls}>
+              <Caret />
+              {t.faq}
+            </Link>
+          </li>
         </FooterCol>
         <FooterCol title={t.company}>
           <li>
             <a href={INVITA_IV_SITE} target="_blank" rel="noopener noreferrer" className={linkCls}>
+              <Caret />
               {t.iv}
             </a>
           </li>
           <li>
             <a href={invitaWhatsappUrl(t.partnerMsg)} target="_blank" rel="noopener noreferrer" className={linkCls}>
+              <Caret />
               {t.partner}
             </a>
           </li>
         </FooterCol>
       </div>
-      <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-[var(--iv-cream)]/55 sm:px-6 md:flex-row md:items-center md:justify-between">
+      <div className="border-t border-[var(--iv-line)] bg-[var(--iv-mist)]">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-[var(--iv-muted)] sm:px-6 md:flex-row md:items-center md:justify-between">
           <p>{t.disclaimer}</p>
           <p>© {new Date().getFullYear()} Invita. {t.rights}</p>
         </div>
@@ -278,8 +278,18 @@ export function InvitaFooter({ locale }: { locale: Locale }) {
 function FooterCol({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--iv-gold)]">{title}</p>
-      <ul className="mt-4 space-y-2.5">{children}</ul>
+      <p className="iv-slab text-lg text-[var(--iv-navy)]">{title}</p>
+      <span className="iv-bar mt-3 w-10" aria-hidden />
+      <ul className="mt-5 space-y-3">{children}</ul>
     </div>
+  );
+}
+
+/** Small pointer before each footer link, turned to face the reading direction. */
+function Caret() {
+  return (
+    <svg viewBox="0 0 8 10" aria-hidden className="mt-[0.4em] h-2 w-1.5 shrink-0 fill-[var(--iv-gold-deep)] rtl:-scale-x-100">
+      <path d="M0 0l8 5-8 5z" />
+    </svg>
   );
 }

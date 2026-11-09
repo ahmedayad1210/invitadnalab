@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Alexandria } from "next/font/google";
+import { Alexandria, Roboto_Slab } from "next/font/google";
 import { notFound } from "next/navigation";
 import { LOCALES, isLocale } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/seo";
@@ -13,6 +13,14 @@ const alexandria = Alexandria({
   display: "swap",
 });
 
+// Headlines: `.iv-slab` and every h1/h2. Latin only; Arabic falls back to Alexandria.
+const robotoSlab = Roboto_Slab({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-slab",
+  display: "swap",
+});
+
 type LayoutProps = { children: React.ReactNode; params: Promise<{ locale: string }> };
 
 export const dynamicParams = false;
@@ -21,7 +29,7 @@ export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
 
-export const viewport: Viewport = { themeColor: "#0f2341" };
+export const viewport: Viewport = { themeColor: "#ffffff" };
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const isAr = (await params).locale === "ar";
@@ -51,7 +59,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   return (
-    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={alexandria.variable}>
+    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={`${alexandria.variable} ${robotoSlab.variable}`}>
       <body className="invita flex min-h-screen flex-col antialiased">
         <a
           href="#main-content"
